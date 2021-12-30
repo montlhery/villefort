@@ -1,0 +1,26 @@
+on: pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/build-push-action@v2
+        id: image
+      - run: >-
+          docker run ${{ steps.image.outputs.digest }}
+          --message="$MESSAGE"
+          --recipient=10123456789
+          --sender=19876543210
+          --date=1970-12-31T23:59:59
+          --reference=255
+          --status=INBOUND_NOT_READ |
+          diff - <(printf "$RESULT")
+        env:
+          MESSAGE: |
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat.
+          RESULT: |
+            0307910121436587F9400B919178563412F0000007211332959500A0050003FF0201986F79B90D4AC3E7F53688FC66BFE5A0799A0E0AB7CB741668FC76CFCB637A995E9783C2E4343C3D1FA7DD6750999DA6B314F33219447E83CAE9FABCFD2683E8E536FC2D07A5DDE334394DAEBBE9A03A1DC40E8BDFF232A84C0791DFECB7BC0C6A87CFEE3028CC4EC7EB6197A24A0795DDE936284C06B5D3EE741B642FBBD3E1360B14AFA7E7
+            0307910121436587F9400B919178563412F000000721133295950056050003FF020240EEF79C2EAF9341657C593E4ED3C3F4F4DB0DAAB3D9E1F6F8AD6087C56F797A0E72A7E769509D0E0AB3D3F17A1A0E2AE341E53068FC6EB7DFE43768FC76CFCBF17A98EE5200
