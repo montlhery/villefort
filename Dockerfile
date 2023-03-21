@@ -1,6 +1,5 @@
 FROM python:2.7-alpine
-WORKDIR /opt/montlhery
-COPY requirements.txt .
-COPY montlhery.py montlhery
+WORKDIR /opt/villefort
+COPY requirements.txt villefort.py .
 RUN pip install --requirement requirements.txt
-ENTRYPOINT ["python", "montlhery"]
+ENTRYPOINT ["python", "villefort.py"]

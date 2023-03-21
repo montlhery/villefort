@@ -19,7 +19,7 @@ STATUSES = {
 @click.option('--reference', type=int, default=0)
 @click.option('--limit', type=int, default=153)
 @click.option('--status', type=click.Choice(STATUSES.keys()))
-def montlhery(sender, recipient, message, date, reference, limit, status):
+def main(sender, recipient, message, date, reference, limit, status):
     """
     Create SMS records in the EF.SMS SIM card format.
     """
@@ -43,5 +43,5 @@ def montlhery(sender, recipient, message, date, reference, limit, status):
 
 
 if __name__ == '__main__':
-    montlhery()
+    main()
 
